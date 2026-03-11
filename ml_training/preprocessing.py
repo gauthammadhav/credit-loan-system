@@ -43,22 +43,21 @@ def preprocess_data(csv_path):
     if 'Dependents' in df.columns:
         df['Dependents'] = df['Dependents'].astype(str).replace({'0': 0, '1': 1, '2': 2, '3+': 3, 'nan': np.nan}).astype(float)
         
-    # Missing values imputation
-    if 'LoanAmount' in df.columns:
-        df['LoanAmount'].fillna(df['LoanAmount'].median(), inplace=True)
-    if 'Loan_Amount_Term' in df.columns:
-        df['Loan_Amount_Term'].fillna(df['Loan_Amount_Term'].median(), inplace=True)
-    if 'Credit_History' in df.columns:
-        df['Credit_History'].fillna(df['Credit_History'].mode()[0], inplace=True)
-        
+    # Missing values imputation for numerical columns
+    num_cols = df.select_dtypes(include=[np.number]).columns
+    for col in num_cols:
+        if col in df.columns:
+            df[col] = df[col].fillna(df[col].median())
+            
     # Categorical columns imputation
     cat_cols = df.select_dtypes(include=['object']).columns
     for col in cat_cols:
-        df[col].fillna(df[col].mode()[0], inplace=True)
-        
+        if col in df.columns:
+            df[col] = df[col].fillna(df[col].mode()[0])
+            
     # Also impute Dependents if any nans remain
     if 'Dependents' in df.columns:
-        df['Dependents'].fillna(df['Dependents'].mode()[0], inplace=True)
+        df['Dependents'] = df['Dependents'].fillna(df['Dependents'].mode()[0])
         
     # Feature Engineering
     df = feature_engineering(df)

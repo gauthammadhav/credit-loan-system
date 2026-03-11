@@ -15,6 +15,19 @@ def predict_loan(data: dict) -> float:
     total_income = df['Total_Income'].replace(0, 1) # Prevent division by zero
     df['Debt_to_Income_Ratio'] = df['EMI_Estimate'] / total_income
     
+    # Missing engineered features for CIBIL and Loan-to-Income from training
+    denominator = df['Total_Income'] * df['Loan_Amount_Term']
+    df['Loan_to_Income_Ratio'] = [
+        amt / den if den > 0 else 0 
+        for amt, den in zip(df['LoanAmount'], denominator)
+    ]
+    
+    def get_cibil(ch):
+        return 775 if ch == 1 else 525
+        
+    df['Base_CIBIL'] = df['Credit_History'].apply(get_cibil)
+    df['Adjusted_CIBIL'] = df['Base_CIBIL']
+    
     # 3. Apply one-hot encoding
     df = pd.get_dummies(df)
     
