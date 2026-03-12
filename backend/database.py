@@ -1,9 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # You can configure this via environment variables or .env file
-# For now, substituting with a default local postgresql URL format
+# Using PostgreSQL for production-ready robust database persistence
 SQLALCHEMY_DATABASE_URL = os.getenv(
     "DATABASE_URL", 
     "postgresql://postgres:postgres@localhost:5432/credit_loan_db"
