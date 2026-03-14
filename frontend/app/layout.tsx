@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
+import { Navbar } from "@/components/Navbar";
 import "./globals.css";
 
 const inter = Inter({
@@ -25,31 +26,29 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${inter.variable} ${manrope.variable} antialiased min-h-screen flex flex-col`}
+        className={`${inter.variable} ${manrope.variable} antialiased min-h-screen flex flex-col font-sans bg-[#0D0D0D] text-white`}
       >
-        {/* Navbar Placeholder */}
-        <header className="w-full border-b border-white/5 bg-[#0D0D0D]/80 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <h1 className="text-xl font-bold font-heading text-white tracking-wide">
-              AURA<span className="text-[#F1E194]">CREDIT</span>
-            </h1>
-            <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-400">
-              <span className="hover:text-white transition-colors cursor-pointer">Dashboard</span>
-              <span className="hover:text-white transition-colors cursor-pointer">Apply</span>
-              <span className="hover:text-white transition-colors cursor-pointer">Review</span>
-            </nav>
-          </div>
-        </header>
+        <Navbar />
 
         {/* Page Container */}
-        <main className="flex-1 w-full">
+        <main className="flex-1 w-full pt-20">
           {children}
         </main>
 
-        {/* Footer Placeholder */}
-        <footer className="w-full border-t border-white/5 py-12 mt-auto">
-          <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <p className="text-sm text-gray-500">© 2026 Aura Credit Systems. All rights reserved.</p>
+        {/* Footer */}
+        <footer className="w-full border-t border-white/5 py-12 mt-auto bg-[#0D0D0D]">
+          <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-6 rounded bg-gradient-to-br from-[#5B0E14] to-[#F1E194]" />
+              <span className="text-sm font-bold tracking-tight text-white font-heading">
+                Aura<span className="text-[#F1E194]">Loan</span>
+              </span>
+            </div>
+            <p className="text-sm text-gray-500">© 2026 Aura Credit Systems. Precision Intelligence for Modern Finance.</p>
+            <div className="flex gap-6 text-sm text-gray-400">
+              <span className="hover:text-white cursor-pointer transition-colors">Privacy</span>
+              <span className="hover:text-white cursor-pointer transition-colors">Terms</span>
+            </div>
           </div>
         </footer>
       </body>

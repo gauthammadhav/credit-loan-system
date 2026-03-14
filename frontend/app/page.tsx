@@ -1,10 +1,12 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Link from "next/link"
 import { fadeUp, staggerContainer } from "@/lib/animations"
 import { Container } from "@/components/ui/container"
 import { Section } from "@/components/ui/section"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 
 export default function Home() {
   return (
@@ -43,13 +45,50 @@ export default function Home() {
             </motion.p>
             
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto">
-                Apply for Credit
-              </Button>
+              <Link href="/apply" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full">
+                  Apply for Credit
+                </Button>
+              </Link>
               <Button variant="secondary" size="lg" className="w-full sm:w-auto">
                 View Architecture
               </Button>
             </motion.div>
+          </motion.div>
+        </Container>
+      </Section>
+
+      {/* Features Section */}
+      <Section className="py-24 bg-white/[0.02]">
+        <Container>
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                title: "Instant Verification",
+                description: "Our ML engine processes applications in milliseconds with high precision.",
+              },
+              {
+                title: "Fraud Prevention",
+                description: "Advanced heuristics detect suspicious patterns before they become issues.",
+              },
+              {
+                title: "Data Driven",
+                description: "Transparent risk scoring gives you the full picture of every transaction.",
+              },
+            ].map((feature, i) => (
+              <motion.div key={i} variants={fadeUp}>
+                <Card className="p-8 h-full bg-white/5 border-white/5 hover:border-[#F1E194]/20 transition-all">
+                  <h3 className="text-xl font-bold mb-4 text-[#F1E194]">{feature.title}</h3>
+                  <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+                </Card>
+              </motion.div>
+            ))}
           </motion.div>
         </Container>
       </Section>

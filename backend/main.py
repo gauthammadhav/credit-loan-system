@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from backend.prediction_service import predict_loan
 from backend.fraud_engine import calculate_fraud_score
 from backend.database import get_db, engine, Base
-from backend.crud import create_application, save_prediction_result
+from backend.crud import create_application, save_prediction_result, get_applications
 
 # Try to create database tables if they don't exist
 try:
@@ -97,3 +97,8 @@ def apply_loan_endpoint(request: LoanApplicationRequest, db: Session = Depends(g
         "decision": decision,
         "message": "Loan application submitted successfully"
     }
+
+@app.get("/applications")
+def get_applications_endpoint(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    applications = get_applications(db, skip=skip, limit=limit)
+    return applications

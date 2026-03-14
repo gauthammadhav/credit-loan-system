@@ -43,6 +43,9 @@ def save_prediction_result(db: Session, application_id: int, approval_prob: floa
         db.refresh(db_application)
     return db_application
 
+def get_applications(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(LoanApplication).offset(skip).limit(limit).all()
+
 def store_document(db: Session, application_id: int, document_type: str, file_path: str):
     db_document = Document(
         application_id=application_id,
